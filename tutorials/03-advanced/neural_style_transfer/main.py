@@ -3,6 +3,7 @@ from torch.backends import cudnn
 from torch.autograd import Variable
 from torchvision import models
 from torchvision import transforms
+
 from PIL import Image
 import argparse
 import torch
@@ -63,8 +64,9 @@ def main(config):
     # For normalization, see https://github.com/pytorch/vision#models
     transform = transforms.Compose([
         transforms.ToTensor(),
-        transforms.Normalize((0.485, 0.456, 0.406), 
-                             (0.229, 0.224, 0.225))])
+        transforms.Normalize(
+            (0.485, 0.456, 0.406), 
+            (0.229, 0.224, 0.225))])
     
     # Load content and style images
     # make content.size() == style.size() 
@@ -124,14 +126,14 @@ def main(config):
         
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--content', type=str, default='./png/content.png')
-    parser.add_argument('--style', type=str, default='./png/style.png')
-    parser.add_argument('--max_size', type=int, default=400)
-    parser.add_argument('--total_step', type=int, default=5000)
-    parser.add_argument('--log_step', type=int, default=10)
-    parser.add_argument('--sample_step', type=int, default=1000)
-    parser.add_argument('--style_weight', type=float, default=100)
-    parser.add_argument('--lr', type=float, default=0.003)
+    parser.add_argument('--content',     type=str,  default='./png/content.png')
+    parser.add_argument('--style',       type=str,  default='./png/style.png')
+    parser.add_argument('--max_size',    type=int,  default=400)
+    parser.add_argument('--total_step',  type=int,  default=5000)
+    parser.add_argument('--log_step',    type=int,  default=10)
+    parser.add_argument('--sample_step', type=int,  default=1000)
+    parser.add_argument('--style_weight',type=float,default=100)
+    parser.add_argument('--lr',          type=float,default=0.003)
     config = parser.parse_args()
     print(config)
     main(config)
